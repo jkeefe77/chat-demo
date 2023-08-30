@@ -65,6 +65,9 @@ const Start = ({ navigation }) => {
               onPress={() => setColor("yellow")}
             ></TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.button} onPress={signInUser}>
+            <Text>Start chatting</Text>
+          </TouchableOpacity>
         </View>
       </View>
       {Platform.OS === "ios" ? (
