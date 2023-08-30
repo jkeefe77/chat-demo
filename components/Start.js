@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { signInAnonymously } from "firebase/auth";
 import {
   StyleSheet,
   View,
@@ -6,15 +7,32 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  Alert,
+  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 
 const Start = ({ navigation }) => {
-  const [text, setText] = useState("");
+  const [name, setName] = useState("");
   const [color, setColor] = useState("");
+
+  const signInUser = () => {
+    signInAnonymously(auth)
+      .then((result) => {
+        navigation.navigate("Chat", {
+          userID: result.user.uid,
+          name: name,
+          color: color,
+        });
+      })
+      .catch((error) => {
+        Alert.alert("Unable to sign in, try again later.");
+      });
+  };
 
   return (
     <ImageBackground
-      source={require("./assets/BackgroundImage.png")}
+      source={require("../assets/Background-Image.png")}
       resizeMode="cover"
       style={styles.backgroundImage}
     >
@@ -24,9 +42,9 @@ const Start = ({ navigation }) => {
         </View>
         <View style={styles.subContainer}>
           <TextInput
-            placeholder="Your name"
+            placeholder="Type your username here"
             style={styles.input}
-            onChangeText={setText}
+            onChangeText={setName}
           />
           <Text>Choose Background Color</Text>
           <View style={styles.radioButtonContainer}>
@@ -47,9 +65,6 @@ const Start = ({ navigation }) => {
               onPress={() => setColor("yellow")}
             ></TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.button} onPress={signInUser}>
-            <Text>Go to Chat</Text>
-          </TouchableOpacity>
         </View>
       </View>
       {Platform.OS === "ios" ? (
@@ -58,7 +73,6 @@ const Start = ({ navigation }) => {
     </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,

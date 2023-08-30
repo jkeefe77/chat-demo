@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
 
 const Chat = ({ route, navigation }) => {
   const { name, color, userID } = route.params;
@@ -10,8 +10,18 @@ const Chat = ({ route, navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Hello Screen2!</Text>
+    <View style={[styles.container, { backgroundColor: color }]}>
+      <GiftedChat
+        messages={messages}
+        onSend={(message) => addMessage(message)}
+        user={{
+          _id: userID,
+          name: name,
+        }}
+      />
+      {Platform.OS === "android" ? (
+        <KeyboardAvoidingView behavior="height" />
+      ) : null}
     </View>
   );
 };
