@@ -1,27 +1,15 @@
-import { useEffect, useState } from "react";
-import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
+import React from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const Chat = ({ route, navigation }) => {
-  const { name, color, userID } = route.params;
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    navigation.setOptions({ title: name });
-  }, []);
+const Chat = ({ route }) => {
+  const { name, color } = route.params;
+  const navigation = useNavigation();
 
   return (
     <View style={[styles.container, { backgroundColor: color }]}>
-      <GiftedChat
-        messages={messages}
-        onSend={(message) => addMessage(message)}
-        user={{
-          _id: userID,
-          name: name,
-        }}
-      />
-      {Platform.OS === "android" ? (
-        <KeyboardAvoidingView behavior="height" />
-      ) : null}
+      <Text style={styles.chatText}>Username: {name}</Text>
+      <Button title="Go back" onPress={() => navigation.goBack()} />
     </View>
   );
 };
@@ -30,8 +18,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  textingBox: {
+  chatText: {
+    fontSize: 25,
     flex: 1,
+    color: "white",
   },
 });
 

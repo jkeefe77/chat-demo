@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInAnonymously } from "firebase/auth";
+
 import {
   StyleSheet,
   View,
@@ -7,7 +7,6 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  Alert,
   Platform,
   KeyboardAvoidingView,
 } from "react-native";
@@ -16,18 +15,12 @@ const Start = ({ navigation }) => {
   const [name, setName] = useState("");
   const [color, setColor] = useState("");
 
-  const signInUser = () => {
-    signInAnonymously(auth)
-      .then((result) => {
-        navigation.navigate("Chat", {
-          userID: result.user.uid,
-          name: name,
-          color: color,
-        });
-      })
-      .catch((error) => {
-        Alert.alert("Unable to sign in, try again later.");
-      });
+  const navigateToChat = () => {
+    // Navigate to the "Chat" screen with the user's name and selected color
+    navigation.navigate("Chat", {
+      name: name,
+      color: color,
+    });
   };
 
   return (
@@ -44,29 +37,30 @@ const Start = ({ navigation }) => {
           <TextInput
             placeholder="Type your username here"
             style={styles.input}
+            value={name}
             onChangeText={setName}
           />
-          <Text>Choose Background Color</Text>
+          <Text style={styles.backgroundSelect}>Choose Background Color</Text>
           <View style={styles.radioButtonContainer}>
             <TouchableOpacity
-              style={[styles.radioButton, { backgroundColor: "red" }]}
-              onPress={() => setColor("red")}
+              style={[styles.radioButton, { backgroundColor: "#090C08" }]}
+              onPress={() => setColor("#090C08")}
             ></TouchableOpacity>
             <TouchableOpacity
-              style={[styles.radioButton, { backgroundColor: "blue" }]}
-              onPress={() => setColor("blue")}
+              style={[styles.radioButton, { backgroundColor: "#474056" }]}
+              onPress={() => setColor("#474056")}
             ></TouchableOpacity>
             <TouchableOpacity
-              style={[styles.radioButton, { backgroundColor: "green" }]}
-              onPress={() => setColor("green")}
+              style={[styles.radioButton, { backgroundColor: "#8A95A5" }]}
+              onPress={() => setColor("#8A95A5")}
             ></TouchableOpacity>
             <TouchableOpacity
-              style={[styles.radioButton, { backgroundColor: "yellow" }]}
-              onPress={() => setColor("yellow")}
+              style={[styles.radioButton, { backgroundColor: "#B9C6AE" }]}
+              onPress={() => setColor("#B9C6AE")}
             ></TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.button} onPress={signInUser}>
-            <Text>Start chatting</Text>
+          <TouchableOpacity style={styles.button} onPress={navigateToChat}>
+            <Text style={styles.buttonText}>Start chatting</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -76,11 +70,11 @@ const Start = ({ navigation }) => {
     </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
-
   container: {
     flex: 1,
     alignItems: "center",
@@ -100,12 +94,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 45,
+    fontWeight: 600,
+    color: "white",
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#DDDDDD",
+    backgroundColor: "#757083",
     padding: 10,
+    borderRadius: 20,
+  },
+  buttonText: {
+    color: "FFFFFF",
+    fontWeight: "bold",
+    fontWeight: 600,
+    fontSize: 16,
   },
   radioButton: {
     backgroundColor: "black",
@@ -113,12 +116,24 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 15,
   },
+
   input: {
     height: 40,
     width: "88%",
     margin: 12,
     borderWidth: 3,
     padding: 10,
+    fontSize: 16,
+    fontWeight: 300,
+    color: "#black",
+    opacity: 0.5,
+  },
+
+  backgroundSelect: {
+    fontSize: 16,
+    fontWeight: 300,
+    color: "#757083",
+    opacity: 5,
   },
 });
 
