@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 45,
-    fontWeight: 600,
+    fontWeight: "600",
     color: "white",
   },
   button: {
@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonText: {
-    color: "FFFFFF",
+    color: "ff00ff",
     fontWeight: "bold",
-    fontWeight: 600,
+    fontWeight: "600",
     fontSize: 16,
   },
   radioButton: {
@@ -124,14 +124,14 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     padding: 10,
     fontSize: 16,
-    fontWeight: 300,
-    color: "#black",
+    fontWeight: "300",
+    color: "#ff00ff",
     opacity: 0.5,
   },
 
   backgroundSelect: {
     fontSize: 16,
-    fontWeight: 300,
+    fontWeight: "300",
     color: "#757083",
     opacity: 5,
   },
