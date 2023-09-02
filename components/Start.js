@@ -60,7 +60,7 @@ const Start = ({ navigation }) => {
             ></TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.button} onPress={navigateToChat}>
-            <Text style={styles.buttonText}>Start chatting</Text>
+            <Text style={styles.buttonText}>Let's Chat!</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -105,10 +105,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonText: {
-    color: "ff00ff",
-    fontWeight: "bold",
+    color: "white",
     fontWeight: "600",
-    fontSize: 16,
+    fontSize: 20,
   },
   radioButton: {
     backgroundColor: "black",
@@ -125,14 +124,15 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     fontWeight: "300",
-    color: "#ff00ff",
+    color: "black",
     opacity: 0.5,
+    backgroundColor: "white",
   },
 
   backgroundSelect: {
     fontSize: 16,
     fontWeight: "300",
-    color: "#757083",
+    color: "white",
     opacity: 5,
   },
 });
