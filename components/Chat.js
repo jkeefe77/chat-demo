@@ -1,46 +1,85 @@
+//components/Chat.js
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   View,
-  Text,
-  Button,
+  StyleSheet,
   Platform,
+  FlatList,
+  Text,
   KeyboardAvoidingView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Bubble, GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
+import { collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from "@react-native-community/netinfo";
 
-const Chat = ({ route }) => {
-  const { name, color } = route.params;
-  const navigation = useNavigation();
-
+const Chat = ({ db, route }) => {
+  const { name, backgroundColor, _id } = route.params;
   const [messages, setMessages] = useState([]);
+  const [isConnected, setIsConnected] = useState(false); // Set the initial connection status
 
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-      {
-        _id: 2,
-        text: "This is a system message",
-        createdAt: new Date(),
-        system: true,
-      },
-    ]);
+    const unsubscribeNetInfo = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      if (unsubscribeNetInfo) unsubscribeNetInfo();
+    };
   }, []);
 
+  useEffect(() => {
+    if (isConnected) {
+      const unsubMessages = onSnapshot(
+        collection(db, "messages"),
+        async (querySnapshot) => {
+          const newMessages = querySnapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              _id: doc.id,
+              text: data.text,
+              createdAt: data.createdAt.toDate(),
+              user: {
+                name: name,
+              },
+            };
+          });
+
+          // Sort messages by createdAt in descending order
+          newMessages.sort((a, b) => b.createdAt - a.createdAt);
+          setMessages(newMessages);
+
+          // Cache messages in AsyncStorage
+          try {
+            await AsyncStorage.setItem(
+              "cachedMessages",
+              JSON.stringify(newMessages)
+            );
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+      );
+
+      return () => {
+        if (unsubMessages) unsubMessages();
+      };
+    } else {
+      // Load cached messages from AsyncStorage
+      AsyncStorage.getItem("cachedMessages")
+        .then((cachedMessages) => {
+          if (cachedMessages) {
+            setMessages(JSON.parse(cachedMessages));
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  }, [db, isConnected]);
+
   const onSend = (newMessages) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, newMessages)
-    );
+    addDoc(collection(db, "messages"), newMessages[0]);
   };
 
   const renderBubble = (props) => {
@@ -58,34 +97,37 @@ const Chat = ({ route }) => {
       />
     );
   };
+
+  const renderInputToolbar = (props) => {
+    if (isConnected) {
+      return <InputToolbar {...props} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <View style={[styles.container, { backgroundColor: color }]}>
-      <Text style={styles.chatText}>Username: {name}</Text>
+    <View style={[styles.container, { backgroundColor }]}>
       <GiftedChat
         messages={messages}
+        renderBubble={renderBubble}
+        renderInputToolbar={renderInputToolbar}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          _id: _id,
+          name: name,
         }}
-        renderBubble={renderBubble}
       />
       {Platform.OS === "android" ? (
         <KeyboardAvoidingView behavior="height" />
       ) : null}
-      {Platform.OS === "ios" ? (
-        <KeyboardAvoidingView behavior="padding" />
-      ) : null}
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  chatText: {
-    fontSize: 25,
-    flex: 1,
-    color: "white",
   },
 });
 

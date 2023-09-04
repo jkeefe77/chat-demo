@@ -9,18 +9,28 @@ import {
   ImageBackground,
   Platform,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 const Start = ({ navigation }) => {
+  const [backgroundColor, setbackgroundColor] = useState("");
   const [name, setName] = useState("");
-  const [color, setColor] = useState("");
+  const auth = getAuth();
 
-  const navigateToChat = () => {
-    // Navigate to the "Chat" screen with the user's name and selected color
-    navigation.navigate("Chat", {
-      name: name,
-      color: color,
-    });
+  const signInUser = () => {
+    signInAnonymously(auth)
+      .then((result) => {
+        // Navigate to the "Chat" screen with the user's name and selected color
+        navigation.navigate("Chat", {
+          name: name,
+          backgroundColor: backgroundColor,
+        });
+        Alert.alert("Signed in Successfully");
+      })
+      .catch((error) => {
+        Alert.alert("unable to sign in, try again later");
+      });
   };
 
   return (
@@ -40,26 +50,27 @@ const Start = ({ navigation }) => {
             value={name}
             onChangeText={setName}
           />
+          {/* User selects backgroundcolor */}
           <Text style={styles.backgroundSelect}>Choose Background Color</Text>
           <View style={styles.radioButtonContainer}>
             <TouchableOpacity
               style={[styles.radioButton, { backgroundColor: "#090C08" }]}
-              onPress={() => setColor("#090C08")}
+              onPress={() => setbackgroundColor("#090C08")}
             ></TouchableOpacity>
             <TouchableOpacity
               style={[styles.radioButton, { backgroundColor: "#474056" }]}
-              onPress={() => setColor("#474056")}
+              onPress={() => setbackgroundColor("#474056")}
             ></TouchableOpacity>
             <TouchableOpacity
               style={[styles.radioButton, { backgroundColor: "#8A95A5" }]}
-              onPress={() => setColor("#8A95A5")}
+              onPress={() => setbackgroundColor("#8A95A5")}
             ></TouchableOpacity>
             <TouchableOpacity
               style={[styles.radioButton, { backgroundColor: "#B9C6AE" }]}
-              onPress={() => setColor("#B9C6AE")}
+              onPress={() => setbackgroundColor("#B9C6AE")}
             ></TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.button} onPress={navigateToChat}>
+          <TouchableOpacity style={styles.button} onPress={signInUser}>
             <Text style={styles.buttonText}>Let's Chat!</Text>
           </TouchableOpacity>
         </View>
