@@ -1,15 +1,8 @@
 //components/Chat.js
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Platform,
-  FlatList,
-  Text,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, StyleSheet, Platform, KeyboardAvoidingView } from "react-native";
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
-import { collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
 

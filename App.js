@@ -5,6 +5,7 @@ import Chat from "./components/Chat";
 import { useEffect } from "react";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import {
   getFirestore,
   disableNetwork,
@@ -17,6 +18,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //creating the navigator
 const Stack = createNativeStackNavigator();
+const firebaseConfig = {
+  apiKey: "AIzaSyBrA5NjFLzpsiLsJ4TNQeQjhzRqCFS4rQM",
+  authDomain: "chatapp-60b0d.firebaseapp.com",
+  projectId: "chatapp-60b0d",
+  storageBucket: "chatapp-60b0d.appspot.com",
+  messagingSenderId: "978423441043",
+  appId: "1:978423441043:web:7b445112dec18b34158f66",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
 const App = () => {
   const connectionStatus = useNetInfo();
   useEffect(() => {
@@ -28,17 +42,7 @@ const App = () => {
       enableNetwork(db); // Enable Firestore network access
     }
   }, [connectionStatus.isConnected]);
-  const firebaseConfig = {
-    apiKey: "AIzaSyBrA5NjFLzpsiLsJ4TNQeQjhzRqCFS4rQM",
-    authDomain: "chatapp-60b0d.firebaseapp.com",
-    projectId: "chatapp-60b0d",
-    storageBucket: "chatapp-60b0d.appspot.com",
-    messagingSenderId: "978423441043",
-    appId: "1:978423441043:web:7b445112dec18b34158f66",
-  };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
@@ -48,6 +52,7 @@ const App = () => {
             <Chat
               isConnected={connectionStatus.isConnected}
               db={db}
+              storage={storage}
               {...props}
             />
           )}
