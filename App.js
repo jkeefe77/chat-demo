@@ -11,6 +11,7 @@ import {
   disableNetwork,
   enableNetwork,
 } from "firebase/firestore";
+import { Alert } from "react-native";
 
 //importing react navigation
 import { NavigationContainer } from "@react-navigation/native";
