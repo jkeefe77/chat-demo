@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     padding: 10,
     fontSize: 16,
-    fontWeight: "300",
+    fontWeight: "bold",
     color: "black",
     opacity: 0.5,
     backgroundColor: "white",

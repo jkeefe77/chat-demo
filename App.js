@@ -10,7 +10,6 @@ import {
   disableNetwork,
   enableNetwork,
 } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 
 //importing react navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -40,7 +39,6 @@ const App = () => {
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const storage = getStorage(app);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">
@@ -50,7 +48,6 @@ const App = () => {
             <Chat
               isConnected={connectionStatus.isConnected}
               db={db}
-              storage={storage}
               {...props}
             />
           )}
