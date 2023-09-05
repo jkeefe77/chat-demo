@@ -41,6 +41,8 @@ const Chat = ({ db, route }) => {
               createdAt: data.createdAt.toDate(),
               user: {
                 name: name,
+                _id: data.user._id,
+                name: data.user.name,
               },
             };
           });
@@ -78,7 +80,7 @@ const Chat = ({ db, route }) => {
     }
   }, [db, isConnected]);
 
-  const onSend = (newMessages) => {
+  const onSend = async (newMessages) => {
     addDoc(collection(db, "messages"), newMessages[0]);
   };
 
