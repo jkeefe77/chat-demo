@@ -2,7 +2,7 @@
 
 React Native Mobile Chat App. The app provides users with a chat interface and options to share images and their location.
 
-<img src="../5.5/readme.png"/>
+![ChatterBox](readme.png)
 
 ## Technologies used
 
