@@ -30,7 +30,7 @@ React Native Mobile Chat App. The app provides users with a chat interface and o
 
 #### Clone the Project:
 
-- Clone or download ZenZap from the repository.
+- Clone or download ChatterBox from the repository.
 
 #### Install Dependencies:
 
@@ -52,4 +52,4 @@ In the Firebase console, set appropriate read/write rules for your database. For
 
 #### Run the App:
 
-With Expo Go or the emulator running, you can now use ZenZap on your device. Enter your name and choose a background color to start chatting with others. The app will store and display messages in real-time using Firebase Realtime Database.
+With Expo Go or the emulator running, you can now use ChatterBox on your device. Enter your name and choose a background color to start chatting with others. The app will store and display messages in real-time using Firebase Realtime Database.
