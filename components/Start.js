@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Alert,
 } from "react-native";
+
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 const Start = ({ navigation }) => {
@@ -25,7 +26,7 @@ const Start = ({ navigation }) => {
         navigation.navigate("Chat", {
           name: name,
           backgroundColor: backgroundColor,
-          _id: result.user.uid,
+          userID: result.user.uid,
         });
         Alert.alert("Signed in Successfully");
       })
@@ -42,7 +43,7 @@ const Start = ({ navigation }) => {
     >
       <View style={styles.container}>
         <View style={styles.subContainer}>
-          <Text style={styles.title}>Chat App!</Text>
+          <Text style={styles.title}>ChatterBox</Text>
         </View>
         <View style={styles.subContainer}>
           <TextInput
