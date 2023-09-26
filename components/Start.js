@@ -56,23 +56,46 @@ const Start = ({ navigation }) => {
           <Text style={styles.backgroundSelect}>Choose Background Color</Text>
           <View style={styles.radioButtonContainer}>
             <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="More Options"
+              accessibilityHint="Let's you choose a color"
+              accessibilityRole="button"
               style={[styles.radioButton, { backgroundColor: "#090C08" }]}
               onPress={() => setbackgroundColor("#090C08")}
             ></TouchableOpacity>
             <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="More Options"
+              accessibilityHint="Let's you choose a color"
+              accessibilityRole="button"
               style={[styles.radioButton, { backgroundColor: "#474056" }]}
               onPress={() => setbackgroundColor("#474056")}
             ></TouchableOpacity>
             <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="More Options"
+              accessibilityHint="Let's you choose a color"
+              accessibilityRole="button"
               style={[styles.radioButton, { backgroundColor: "#8A95A5" }]}
               onPress={() => setbackgroundColor("#8A95A5")}
             ></TouchableOpacity>
             <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="More Options"
+              accessibilityHint="Let's you choose a color"
+              accessibilityRole="button"
               style={[styles.radioButton, { backgroundColor: "#B9C6AE" }]}
               onPress={() => setbackgroundColor("#B9C6AE")}
             ></TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.button} onPress={signInUser}>
+          <TouchableOpacity
+            accessible={true}
+            accessibilityLabel="More Options"
+            accessibilityHint="Let's you choose a color"
+            accessibilityRole="button"
+            style={styles.button}
+            onPress={signInUser}
+          >
             <Text style={styles.buttonText}>Let's Chat!</Text>
           </TouchableOpacity>
         </View>
