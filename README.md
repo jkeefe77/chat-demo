@@ -44,7 +44,7 @@ React Native Mobile Chat App. The app provides users with a chat interface and o
 
 - Run `npx expo start` in the terminal to start the Expo development server.
 
-- Use Expo Go app: Install the "Expo Go" app on your Android or iOS device. Scan the QR code shown in the terminal with Expo Go to open the app on your device. You can also run the app on an emulator if you prefer.
+- Use Expo Go app: Install the "Expo Go" app on your Android or iOS device. Scan the QR code shown in the terminal with Expo Go to open the app on your device. You can also run the app on an emulator if you prefer such as Android Studio.
 
 #### Database Rules (Optional):
 
